@@ -12,8 +12,8 @@
 
 using namespace std;
 
-const string INPUT_FILE = "1_input.txt";
-const string GRAMMAR_FILE = "grammar.txt";
+const string INPUT_FILE = "input.txt";
+const string GRAMMAR_FILE = "1_grammar.txt";
 const int START_RULE = 1;
 const string EMPTY_CHAR = "#";
 const string FINAL_CHAR = "$";

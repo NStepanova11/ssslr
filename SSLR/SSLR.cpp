@@ -7,7 +7,10 @@ int main()
 	SlrRunner slr;
 	while (getline(fin, data))
 	{
-		slr.ProcessData(data);
+		if (data[data.size()-1]!='$')
+			data += FINAL_CHAR;
+
+		cout << setw(15) << left << data << " : " << boolalpha << slr.ProcessData(data) << endl;
 	}
 	
 	system("pause");

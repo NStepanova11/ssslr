@@ -26,14 +26,13 @@ bool SlrRunner::ProcessData(string data)
 		string currentState = _actionStack.back();
 		tblLine = _stateTable.at(currentState);
 		
-		PrintStatus(data);
+		//PrintStatus(data);
+
+		fst.clear();
+		fst += data[0];
 
 		for (auto& cell : tblLine)
 		{
-
-			ss << data[0];
-			ss >> fst;
-
 			if (cell.first == fst)
 			{
 				if (cell.second.empty()) //если €чейка пуста€
@@ -53,7 +52,13 @@ bool SlrRunner::ProcessData(string data)
 						return false;
 					else break;
 				}
-
+				else if (cell.second == "OK ")
+				{
+					if (_actionStack.back()==startState && data==cell.first+FINAL_CHAR && _lexemStack.empty())
+						return true;
+					else
+						return false;
+				}
 			}
 		}
 	}
@@ -81,15 +86,18 @@ bool SlrRunner::PerformReduce(int ruleNum, string &data)
 		return false;
 	else
 	{
-		for (size_t i = ruleSize; i > 0; i--)
+		for (int i = ruleSize-1; i >= 0; i--)
 		{
-			if (_lexemStack.back() == _rules.rightParts[ruleNum][i])
+			if (i >= 0)
 			{
-				_lexemStack.pop_back();
-				_actionStack.pop_back();
+				if (_lexemStack.back() == _rules.rightParts[ruleNum][i])
+				{
+					_lexemStack.pop_back();
+					_actionStack.pop_back();
+				}
+				else
+					return false;
 			}
-			else
-				return false;
 		}
 		data = _rules.leftParts[ruleNum] + data;
 	}
