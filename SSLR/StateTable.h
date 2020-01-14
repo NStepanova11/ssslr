@@ -4,6 +4,7 @@
 class StateTable
 {
 private:
+	Rules _rules;
 	unordered_map<string, vector<Cell>> _slrTable;
 	unordered_map<string, string> _stateMap;
 	unordered_map<string, vector<Cell>> _stateTable;
@@ -19,5 +20,7 @@ public:
 	StateTable();
 	void GenerateStateTable();
 	void ShowStateTable();
+	Rules GetRules();
+	unordered_map<string, vector<Cell>> GetStates();
 };
 

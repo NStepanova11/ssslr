@@ -91,8 +91,9 @@ void TableGeneratorSLR::GenerateNextLines()
 			{
 				ParseParams(ruleNum, posInRule, value, elem);
 				if (posInRule == _ruleStrings[ruleNum].size() - 1) // если символ €вл€етс€ последним в строке то свертка
+				{
 					AddInTableToReduce(tblLine, ruleNum, posInRule);
-
+				}
 				else
 				{
 					int posOfNext = posInRule + 1;
@@ -195,9 +196,19 @@ void TableGeneratorSLR::AddInTableNext(vector<Cell>& tblLine, int& ruleNum, int&
 
 void TableGeneratorSLR::AddInTableToReduce(vector<Cell>& tblLine, int& ruleNum, int& posInRule)
 {
-	auto it = find(_allGrammarValues.begin(), _allGrammarValues.end(), FINAL_CHAR);
-	auto pos = distance(_allGrammarValues.begin(), it);
-	tblLine[pos].second += ("R" + to_string(ruleNum) + " ");
+	vector<string> flw = _follows[ruleNum];
+	for (size_t i = 0; i < flw.size(); i++)
+	{
+		for (auto& cell : tblLine)
+		{
+			if (cell.first == flw[i])
+				cell.second = ("R" + to_string(ruleNum) + " ");
+		}
+	}
+
+	//auto it = find(_allGrammarValues.begin(), _allGrammarValues.end(), FINAL_CHAR);
+	//auto pos = distance(_allGrammarValues.begin(), it);
+	//tblLine[pos].second += ("R" + to_string(ruleNum) + " ");
 }
 
 void TableGeneratorSLR::UpdateTurnToNewLine(vector<Cell> tblLine)
@@ -317,6 +328,11 @@ unordered_map<string, vector<Cell>> TableGeneratorSLR::GetSlrTable()
 vector<string> TableGeneratorSLR::GetAllGrammarValues()
 {
 	return _allGrammarValues;
+}
+
+Rules TableGeneratorSLR::GetRules()
+{
+	return _rules;
 }
 
 void TableGeneratorSLR::CalcTablePrams(int& maxNameSize, unordered_map<string, int>& cellSize, int& underLine)

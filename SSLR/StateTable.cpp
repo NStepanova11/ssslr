@@ -7,7 +7,7 @@ StateTable::StateTable()
 	t_slr.ShowSlrTable();
 	_slrTable = t_slr.GetSlrTable();
 	_allGrammarValues = t_slr.GetAllGrammarValues();
-
+	_rules = t_slr.GetRules();
 	//DefineStateMap();
 }
 
@@ -30,19 +30,21 @@ void StateTable::DefineStateMap()
 	}
 }
 */
+
 void StateTable::GenerateStateTable()
 {
 	cout << endl << endl;
+	unordered_map <string, vector<Cell>> states;
 
-	_stateTable = _slrTable;
+	states = _slrTable;
 
 	int idx = -1;
-	for (auto &line : _stateTable)
+	for (auto &line : states)
 	{
 		idx++;
 		string state = line.first;
 
-		for (auto &row : _stateTable)
+		for (auto &row : states)
 		{
 			for (auto &col : row.second)
 			{
@@ -51,8 +53,15 @@ void StateTable::GenerateStateTable()
 			}
 		}
 	}
-
 	
+	idx = 0;
+	for (auto& line : states)
+	{
+		string name = "S" + to_string(idx);
+		_stateTable.insert(pair<string, vector<Cell>>(name, line.second));
+		idx++;
+	}
+
 	/*
 	for (auto &line : _stateTable)
 	{
@@ -148,6 +157,16 @@ void StateTable::ShowStateTable()
 	}
 	cout << endl;
 	fout << endl;
+}
+
+Rules StateTable::GetRules()
+{
+	return _rules;
+}
+
+unordered_map<string, vector<Cell>> StateTable::GetStates()
+{
+	return _stateTable;
 }
 
 void StateTable::CalcTablePrams(int& maxNameSize, unordered_map<string, int>& cellSize, int& underLine)

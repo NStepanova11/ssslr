@@ -42,5 +42,6 @@ public:
 	void ShowSlrTable();
 	unordered_map<string, vector<Cell>> GetSlrTable();
 	vector<string> GetAllGrammarValues();
+	Rules GetRules();
 };
 

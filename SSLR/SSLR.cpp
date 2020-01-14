@@ -1,13 +1,15 @@
-﻿#include "StateTable.h"
-#include "GuideSetGenerator.h"
+﻿#include "SlrRunner.h"
 
 int main()
 {
+	ifstream fin(INPUT_FILE);
+	string data;
+	SlrRunner slr;
+	while (getline(fin, data))
+	{
+		slr.ProcessData(data);
+	}
 	
-	//StateTable st;
-	//st.GenerateStateTable();
-	//st.ShowStateTable();
-
 	system("pause");
 	return 0;
 }
