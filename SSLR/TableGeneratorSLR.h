@@ -1,5 +1,6 @@
 #pragma once
 #include "GrammarParser.h"
+#include "GuideSetGenerator.h";
 
 typedef pair <string, string> Cell;
 
@@ -12,6 +13,8 @@ private:
 	unordered_map<string, vector<Cell>> _slrTable;
 	vector<string> _ntTurn;
 	vector<string> _turnToNewLine;
+	vector<vector<string>> _firsts;
+	vector<vector<string>> _follows;
 
 	vector<Cell> GenerateEmptyTableLine();
 

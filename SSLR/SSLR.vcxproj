@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="GrammarParser.cpp" />
     <ClCompile Include="GrammarReader.cpp" />
+    <ClCompile Include="GuideSetGenerator.cpp" />
     <ClCompile Include="SSLR.cpp" />
     <ClCompile Include="StateTable.cpp" />
     <ClCompile Include="TableGeneratorSLR.cpp" />
@@ -160,6 +161,7 @@
   <ItemGroup>
     <ClInclude Include="GrammarParser.h" />
     <ClInclude Include="GrammarReader.h" />
+    <ClInclude Include="GuideSetGenerator.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="StateTable.h" />
     <ClInclude Include="TableGeneratorSLR.h" />

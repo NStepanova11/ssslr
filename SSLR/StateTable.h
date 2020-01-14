@@ -12,9 +12,11 @@ private:
 
 	void CalcTablePrams(int& maxNameSize, unordered_map<string, int>& cellSize, int& underLine);
 	void PrintUnderLine(int& underLine, ofstream& fout);
+	bool IsNotContainReduce(string &cell);
+	void DefineStateMap();
+
 public:
 	StateTable();
-	void DefineStateMap();
 	void GenerateStateTable();
 	void ShowStateTable();
 };

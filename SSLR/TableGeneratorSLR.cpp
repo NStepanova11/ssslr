@@ -71,7 +71,6 @@ void TableGeneratorSLR::GenerateFirstLine()
 		}
 	}
 	_slrTable.insert(pair<string, vector<Cell>>("Start", fstLine));
-	ShowTblLine("Start", fstLine);
 	UpdateTurnToNewLine(fstLine);
 	_ntTurn.clear();
 }
@@ -118,6 +117,10 @@ TableGeneratorSLR::TableGeneratorSLR()
 	_rules = grp.GetRules();
 	_ruleStrings = grp.GetRuleStrings();
 	_allGrammarValues = grp.GetUniqueValues();
+
+	GuideSetGenerator gg;
+	_firsts = gg.GetFirst();
+	_follows = gg.GetFollow();
 }
 
 void TableGeneratorSLR::GenerateTable()

@@ -7,8 +7,11 @@ StateTable::StateTable()
 	t_slr.ShowSlrTable();
 	_slrTable = t_slr.GetSlrTable();
 	_allGrammarValues = t_slr.GetAllGrammarValues();
+
+	//DefineStateMap();
 }
 
+/*
 void StateTable::DefineStateMap()
 {
 	int idx = 0;
@@ -19,33 +22,71 @@ void StateTable::DefineStateMap()
 		_stateMap.insert(pair<string, string>(key.first, stateName + to_string(idx)));
 		idx++;
 	}
-
+	
+	cout << endl << endl;
 	for (auto e : _stateMap)
-		cout << e.first << "    : " << e.second << endl;
-}
-
-void StateTable::GenerateStateTable()
-{
-	DefineStateMap();
-
-	for (auto line : _slrTable)
 	{
-		vector<Cell> stateLine = GenerateEmptyTableLine();
-		
-		for (size_t i = 0; i < line.second.size(); i++)
-		{
-			if (line.second[i].second.empty())
-			{
-				if (_stateMap.find(line.second[i].second) != _stateMap.end())
-					stateLine[i].second = _stateMap.at(line.second[i].second);
-				else
-					stateLine[i].second = line.second[i].second;
-			}
-		}
-
-		_stateTable.insert(pair<string, vector<Cell>>(line.first, stateLine));
+		cout << e.first << " : " << e.second << endl;
 	}
 }
+*/
+void StateTable::GenerateStateTable()
+{
+	cout << endl << endl;
+
+	_stateTable = _slrTable;
+
+	int idx = -1;
+	for (auto &line : _stateTable)
+	{
+		idx++;
+		string state = line.first;
+
+		for (auto &row : _stateTable)
+		{
+			for (auto &col : row.second)
+			{
+				if (col.second == state)
+					col.second = "S" + to_string(idx);
+			}
+		}
+	}
+
+	
+	/*
+	for (auto &line : _stateTable)
+	{
+		for (auto &cell : line.second)
+		{
+			if (!cell.second.empty())
+			{
+				if (cell.second != "OK ")
+				{
+					if (IsNotContainReduce(cell.second))
+					{
+						string key = cell.second;
+						cell.second.clear();
+						for (auto el : _stateMap)
+						{
+							if (el.first == key)
+								cell.second = el.second;
+						}
+					}
+				}
+			}
+		}
+	}	
+	*/
+}
+
+bool StateTable::IsNotContainReduce(string &cell)
+{
+	for (char e : cell)
+		if (e == 'R')
+			return false;
+	return true;
+}
+
 
 vector<Cell> StateTable::GenerateEmptyTableLine()
 {
